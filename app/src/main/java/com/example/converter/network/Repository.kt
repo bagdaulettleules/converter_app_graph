@@ -2,14 +2,12 @@ package com.example.converter.network
 
 import android.content.Context
 import androidx.room.Room
-import com.example.converter.database.ExRatesDatabase
-import com.example.converter.model.DatabaseModel
-import com.example.converter.model.ResponseModel
+import com.example.converter.database.Database
+import com.example.converter.database.ExRateEntity
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.Executors
 
 
@@ -19,7 +17,7 @@ import java.util.concurrent.Executors
  */
 private const val DATABASE_NAME = "converter_database"
 
-class ExRateRepository private constructor(context: Context) {
+class Repository private constructor(context: Context) {
     private val BASE_URL: String = "http://api.exchangeratesapi.io/v1/"
     private val ACCESS_KEY: String = "1b2cf47776fa684ae56fe45e4088866a"
 
@@ -31,7 +29,7 @@ class ExRateRepository private constructor(context: Context) {
         .create(ExRateApi::class.java)
 
     private val database =
-        Room.databaseBuilder(context, ExRatesDatabase::class.java, DATABASE_NAME).build()
+        Room.databaseBuilder(context, Database::class.java, DATABASE_NAME).build()
     private val currencyDao = database.exRateDao()
     private val executor = Executors.newSingleThreadExecutor()
 
@@ -45,25 +43,25 @@ class ExRateRepository private constructor(context: Context) {
     fun getRateFromDatabase(from: String, to: String, date: String) =
         currencyDao.getRate(from, to, date)
 
-    fun addExRates(list: List<DatabaseModel>) = executor.execute { currencyDao.insertRates(list) }
+    fun addExRates(list: List<ExRateEntity>) = executor.execute { currencyDao.insertRates(list) }
 
-    fun updateRates(databaseModel: DatabaseModel) =
-        executor.execute { currencyDao.updateRates(databaseModel) }
+    fun updateRates(exRateEntity: ExRateEntity) =
+        executor.execute { currencyDao.updateRates(exRateEntity) }
 
     fun getEffectiveDate() = currencyDao.getEffectiveDate()
 
     companion object {
-        private var INSTANCE: ExRateRepository? = null
+        private var INSTANCE: Repository? = null
 
-        fun newInstance(context: Context): ExRateRepository? {
+        fun newInstance(context: Context): Repository? {
             if (INSTANCE == null) {
-                INSTANCE = ExRateRepository(context)
+                INSTANCE = Repository(context)
             }
 
             return INSTANCE
         }
 
-        fun get(): ExRateRepository {
+        fun get(): Repository {
             return INSTANCE ?: throw IllegalStateException("ExRateRepository must be initialized")
         }
     }

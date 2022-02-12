@@ -1,4 +1,4 @@
-package com.example.converter.model
+package com.example.converter.database
 
 import androidx.room.Entity
 import java.util.*
@@ -9,7 +9,7 @@ import java.util.*
  * email: bagdaulettleules@gmail.com
  */
 @Entity(primaryKeys = ["currFrom", "currTo", "date"])
-data class DatabaseModel(
+data class ExRateEntity(
     var currFrom: String = "",
     var currTo: String = "",
     var rate: Double = 1.0,

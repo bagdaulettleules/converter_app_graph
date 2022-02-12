@@ -1,4 +1,4 @@
-package com.example.converter.model
+package com.example.converter.network
 
 import java.io.Serializable
 import java.util.*

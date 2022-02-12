@@ -1,6 +1,5 @@
 package com.example.converter.network
 
-import com.example.converter.model.ResponseModel
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -7,8 +7,7 @@ import java.util.*
  * Created by Bagdaulet Tleules on 06.12.2021.
  * email: bagdaulettleules@gmail.com
  */
-class ExRateAdjacency {
-    val currencies get() = vertices.map { it.key }
+class Graph {
 
     data class Vertex(val name: String) {
         val neighbors = mutableSetOf<Path>()
@@ -26,10 +25,6 @@ class ExRateAdjacency {
 
     private fun connect(first: Vertex, path: Path) {
         first.neighbors.add(path)
-        if (path.vertex.name == "BRL"){
-            Log.d("Graph", "${first.neighbors}", null)
-            Log.d("Graph", "first $first path $path ${1 / path.rate}", null)
-        }
         path.vertex.neighbors.add(Path(first, 1 / path.rate))
     }
 
@@ -39,6 +34,7 @@ class ExRateAdjacency {
     fun neighbors(name: String) = vertices[name]?.neighbors ?: emptyList()
 
     fun getRate(currFrom: String, currTo: String): Double {
+        Log.d("Graph", "$currFrom $currTo", null)
         val queue = ArrayDeque<String>()
         queue.add(currFrom)
         val visited = mutableMapOf(currFrom to 1.0)
@@ -47,6 +43,7 @@ class ExRateAdjacency {
             if (next != null) {
                 val distance = visited[next]!!
                 if (next == currTo) return distance
+                Log.d("Graph", "$distance", null)
                 for ((vertex, rate) in neighbors(next)) {
                     if (vertex.name in visited) continue
                     visited[vertex.name] = distance * rate
@@ -57,9 +54,6 @@ class ExRateAdjacency {
         return 1.0
     }
 
-    fun getString() {
-        currencies.forEach {
-            Log.d("Graph", "$it + ${neighbors(it)}", null)
-        }
-    }
+    fun getList() = vertices.map { it.key }
+
 }
