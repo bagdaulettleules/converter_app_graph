@@ -1,7 +1,7 @@
 package com.example.converter
 
 import android.app.Application
-import com.example.converter.network.ExRateRepository
+import com.example.converter.network.Repository
 
 
 /**
@@ -11,6 +11,6 @@ import com.example.converter.network.ExRateRepository
 class ConverterApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        ExRateRepository.newInstance(this)
+        Repository.newInstance(this)
     }
 }

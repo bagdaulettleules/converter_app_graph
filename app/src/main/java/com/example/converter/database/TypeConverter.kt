@@ -8,7 +8,7 @@ import java.util.*
  * Created by Bagdaulet Tleules on 12.12.2021.
  * email: bagdaulettleules@gmail.com
  */
-class ExRateTypeConverter {
+class TypeConverter {
     @TypeConverter
     fun fromDate(date: Date?): Long? {
         return date?.time
