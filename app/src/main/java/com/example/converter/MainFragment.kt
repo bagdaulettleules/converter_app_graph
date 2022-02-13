@@ -85,7 +85,7 @@ class MainFragment : Fragment() {
             currencies
         )
         actv_curr_from.apply {
-            threshold = 2
+            threshold = 1
             setAdapter(adapter)
             setOnItemClickListener { adapterView, view, i, l ->
                 onItemClicked(adapter, i) {
@@ -103,7 +103,7 @@ class MainFragment : Fragment() {
             currencies
         )
         actv_curr_to.apply {
-            threshold = 2
+            threshold = 1
             setAdapter(adapter)
             setOnItemClickListener { adapterView, view, i, l ->
                 onItemClicked(adapter, i) {
