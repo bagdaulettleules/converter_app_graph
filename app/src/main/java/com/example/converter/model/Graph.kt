@@ -34,7 +34,6 @@ class Graph {
     fun neighbors(name: String) = vertices[name]?.neighbors ?: emptyList()
 
     fun getRate(currFrom: String, currTo: String): Double {
-        Log.d("Graph", "$currFrom $currTo", null)
         val queue = ArrayDeque<String>()
         queue.add(currFrom)
         val visited = mutableMapOf(currFrom to 1.0)
@@ -43,7 +42,6 @@ class Graph {
             if (next != null) {
                 val distance = visited[next]!!
                 if (next == currTo) return distance
-                Log.d("Graph", "$distance", null)
                 for ((vertex, rate) in neighbors(next)) {
                     if (vertex.name in visited) continue
                     visited[vertex.name] = distance * rate

@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: ViewModel by lazy {
-        ViewModelProvider(this)[ViewModel::class.java]
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
